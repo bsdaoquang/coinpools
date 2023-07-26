@@ -13,6 +13,7 @@ import {appColors} from '../constants/appColors';
 import {fontFamilys} from '../constants/fontFamlily';
 import TextComponent from './TextComponent';
 import {appSize} from '../constants/appSize';
+import TitleComponent from './TitleComponent';
 
 interface Props {
   label?: string;
@@ -116,7 +117,14 @@ export const InputCompoment = (props: Props) => {
 
   return (
     <View style={[{marginBottom: 16, flex: flex ?? 0}, styles]}>
-      {label && <TextComponent text={label} styles={{marginBottom: 4}} />}
+      {label && (
+        <TitleComponent
+          text={label}
+          size={14}
+          styles={{marginBottom: 4}}
+          flex={0}
+        />
+      )}
       <View
         style={[
           {

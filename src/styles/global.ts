@@ -10,7 +10,7 @@ export const global = StyleSheet.create({
   },
 
   sections: {
-    // paddingHorizontal: 16,
+    paddingHorizontal: 16,
     paddingVertical: 16
 
   },
