@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "501889673802",
+    "project_id": "coinpools-fe534",
+    "storage_bucket": "coinpools-fe534.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501889673802:android:bb4cc160153c17919f94b3",
+        "android_client_info": {
+          "package_name": "com.coinpools"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501889673802-umhn4t724eua5jdi6dmv2ndc352gpil4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coinpools",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "501889673802-dvv4tagbj08q9r1f4p3o79s46or741da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSWr7mI44z-O55nAFCz34tATaLmrgh0H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501889673802-dvv4tagbj08q9r1f4p3o79s46or741da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
