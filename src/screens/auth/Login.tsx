@@ -1,20 +1,12 @@
-import auth from '@react-native-firebase/auth';
-import {
-  I24Support,
-  Lock1,
-  Message,
-  Messages1,
-  Sms,
-  Translate,
-} from 'iconsax-react-native';
+import CheckBox from '@react-native-community/checkbox';
+import {Call, Lock1, Messages1, Sms} from 'iconsax-react-native';
 import React, {useState} from 'react';
-import {Image, ImageBackground, TouchableOpacity, View} from 'react-native';
+import {Image, ImageBackground, TouchableOpacity} from 'react-native';
 import {
   ButtonComponent,
   ButtonIcon,
   Container,
   InputCompoment,
-  OptionsLogin,
   RowComponent,
   SectionComponent,
   SpaceComponent,
@@ -22,11 +14,10 @@ import {
   TitleComponent,
 } from '../../components';
 import {appColors} from '../../constants/appColors';
-import {fontFamilys} from '../../constants/fontFamlily';
-import {Validate} from '../../utils/validate';
 import {appSize} from '../../constants/appSize';
+import {fontFamilys} from '../../constants/fontFamlily';
 import {global} from '../../styles/global';
-import CheckBox from '@react-native-community/checkbox';
+import {Validate} from '../../utils/validate';
 
 const Login = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -36,6 +27,7 @@ const Login = ({navigation}: any) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setisLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
+  const [isRememberPass, setIsRememberPass] = useState(true);
 
   const handleCheckInput = (target: string) => {
     setErrorMessage('');
@@ -128,12 +120,12 @@ const Login = ({navigation}: any) => {
               value={email}
               helpText={helpEmail}
               onChange={val => setEmail(val)}
-              prefix={<Sms size={20} color={appColors.gray} />}
+              prefix={<Call size={20} color={appColors.gray} />}
               clear
               onEnd={() => handleCheckInput('email')}
               autoComplete="off"
               isCapitalize="none"
-              type="name-phone-pad"
+              type="phone-pad"
             />
             <InputCompoment
               label="Password"
@@ -149,27 +141,32 @@ const Login = ({navigation}: any) => {
               setIsShowPass={() => setIsShowPass(!isShowPass)}
             />
             <RowComponent>
-              <RowComponent styles={{flex: 1}}>
+              <RowComponent
+                styles={{flex: 1}}
+                onPress={() => setIsRememberPass(!isRememberPass)}>
                 <CheckBox
                   style={{
                     padding: 0,
                     margin: 0,
                     marginLeft: -2,
                   }}
-                  value={1 > 2 ? true : false}
+                  value={isRememberPass}
                   // disabled={formItem.viewOnly}
-                  tintColors={{true: appColors.primary, false: appColors.text}}
+                  tintColors={{true: appColors.primary, false: appColors.gray}}
                   onCheckColor={appColors.primary}
                   onFillColor={appColors.primary}
                 />
+
                 <TextComponent text="Remember password?" size={12} flex={1} />
               </RowComponent>
-              <TextComponent
-                text="Forgot password?"
-                color={appColors.primary}
-                size={12}
-                flex={0}
-              />
+              <TouchableOpacity>
+                <TextComponent
+                  text="Forgot password?"
+                  color={appColors.primary}
+                  size={12}
+                  flex={0}
+                />
+              </TouchableOpacity>
             </RowComponent>
           </SectionComponent>
           {errorMessage && (

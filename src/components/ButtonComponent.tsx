@@ -54,7 +54,7 @@ export const ButtonComponent = (props: Props) => {
           borderWidth: outline ? 1 : 0,
           borderColor: color ? color : appColors.primary,
           borderRadius: 8,
-          minHeight: height ?? 42,
+          height: height ?? 40,
           paddingVertical: 8,
           paddingHorizontal: 16,
           backgroundColor: outline
