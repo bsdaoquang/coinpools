@@ -1,17 +1,9 @@
-import auth from '@react-native-firebase/auth';
-import {Call, Lock1, Sms} from 'iconsax-react-native';
+import {decode} from 'html-entities';
+import {Call, GlobalSearch, Lock, User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  ImageBackground,
-  Image,
-  View,
-  ScrollView,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import {ImageBackground, ScrollView} from 'react-native';
 import {
   ButtonComponent,
-  ButtonIcon,
   Container,
   InputCompoment,
   RowComponent,
@@ -23,29 +15,44 @@ import {
 import {appColors} from '../../constants/appColors';
 import {appSize} from '../../constants/appSize';
 import {fontFamilys} from '../../constants/fontFamlily';
-import {ModalLoading} from '../../modals/ModalLoading';
-import {Validate} from '../../utils/validate';
 import {ModalAlert} from '../../modals/ModalAlert';
-import {decode} from 'html-entities';
-import {global} from '../../styles/global';
+import {ModalLoading} from '../../modals/ModalLoading';
+
+interface HelpText {
+  helpFundPass: string;
+  helpLoginPass: string;
+  helpInvatitation: string;
+  helpPhone: string;
+  helpNickname: string;
+}
+
+interface RegisterForm {
+  nickname: string;
+  phoneNumber: string;
+  loginPassword: string;
+  fundPassword: string;
+}
 
 const SignUp = ({navigation}: any) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setisLoading] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
+  const [isShowFundPass, setIsShowFundPass] = useState(false);
   const [isVisibleModalAlert, setIsVisibleModalAlert] = useState(false);
-  const [registerValues, setRegisterValues] = useState<{
-    nickname: string;
-    phoneNumber: string;
-    loginPassword: string;
-    fundPassword: string;
-  }>({
+  const [registerValues, setRegisterValues] = useState<RegisterForm>({
     nickname: '',
     phoneNumber: '',
     loginPassword: '',
     fundPassword: '',
   });
-  const [contryCode, setContryCode] = useState('');
+  const [invitationCode, setInvitationCode] = useState('');
+  const [helpers, setHelpers] = useState<HelpText>({
+    helpNickname: '',
+    helpFundPass: '',
+    helpLoginPass: '',
+    helpInvatitation: '',
+    helpPhone: '',
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,86 +61,52 @@ const SignUp = ({navigation}: any) => {
   }, []);
 
   const handleValue = (val: string, target: string) => {
-    console.log(val);
-    const items = registerValues;
-    items['phoneNumber'] = val;
+    const items: any = {...registerValues};
+    items[`${target}`] = val;
     setRegisterValues({...items});
   };
 
-  console.log(registerValues);
+  const handleRegister = () => {
+    const helps: any = {
+      helpFundPass: registerValues.fundPassword
+        ? ''
+        : 'Please enter your fund password!',
+      helpLoginPass: registerValues.loginPassword
+        ? ''
+        : 'Please enter your login password!',
+      helpInvatitation: invitationCode
+        ? ''
+        : 'Invitation code cannot be empty or wrong!',
+      helpPhone: registerValues.phoneNumber
+        ? ''
+        : 'Please enter your phone number!',
+      helpNickname: registerValues.nickname
+        ? ''
+        : 'Please enter your nick name!',
+    };
 
-  // const handleCheckInput = (target: string) => {
-  //   setErrorMessage('');
-  //   if (target === 'email') {
-  //     if (!email || email === '') {
-  //       setHelpEmail('Please enter your email!');
-  //     } else {
-  //       setHelpEmail('');
-  //       const validate = Validate.email(email);
-  //       if (!validate) {
-  //         setHelpEmail('Email invalidate!');
-  //       } else {
-  //         setHelpEmail('');
-  //       }
-  //     }
-  //   } else if (target === 'pass') {
-  //     if (!password) {
-  //       setHelpPass('Please enter your password!');
-  //     } else if (password.length < 6) {
-  //       setHelpPass('Password must contain at least 6 characters');
-  //     } else {
-  //       setHelpPass('');
-  //     }
-  //   } else {
-  //     if (!confirmPass) {
-  //       setHelpConfirmPass('Please re-enter your password againt!');
-  //     } else {
-  //       if (password !== confirmPass) {
-  //         setHelpConfirmPass('Password not match');
-  //       } else {
-  //         setHelpConfirmPass('');
-  //       }
-  //     }
-  //   }
-  // };
+    setHelpers(helps);
 
-  // const handleLogin = () => {
-  //   if (
-  //     email &&
-  //     password &&
-  //     confirmPass &&
-  //     !helpEmail &&
-  //     !helpPass &&
-  //     !helpConfirmPass
-  //   ) {
-  //     setisLoading(true);
-  //     auth()
-  //       .createUserWithEmailAndPassword(email, password)
-  //       .then(userCredential => {
-  //         const user = userCredential.user;
-  //         if (user) {
-  //           setisLoading(false);
-  //           console.log(user);
-  //         }
-  //       })
-  //       .then(error => {
-  //         console.log(error);
-  //         setisLoading(false);
-  //       });
-  //   } else {
-  //     setErrorMessage(
-  //       'Registration failed, Please check your login information',
-  //     );
-  //   }
-  // };
+    let valid = true;
+    for (const i in helps) {
+      if (helps[i]) {
+        valid = false;
+      }
+    }
+
+    if (valid) {
+      console.log('register');
+    }
+  };
 
   return (
-    <Container isScroll top={0}>
+    <Container top={0}>
       <ImageBackground
         source={require('../../assets/images/login-bg.png')}
         resizeMode="cover"
         style={{
           paddingTop: 32,
+
           justifyContent: 'center',
           alignItems: 'center',
           height: appSize.height,
@@ -141,7 +114,6 @@ const SignUp = ({navigation}: any) => {
         <RowComponent
           styles={{
             padding: 16,
-            marginBottom: '8%',
           }}>
           <TitleComponent
             text="Register"
@@ -151,42 +123,67 @@ const SignUp = ({navigation}: any) => {
             color={appColors.white}
           />
         </RowComponent>
-        <SectionComponent
-          styles={{
+
+        <ScrollView
+          style={{
             flex: 1,
             backgroundColor: appColors.white,
             width: appSize.width,
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
-            paddingTop: 24,
+            padding: 20,
           }}>
-          <SectionComponent styles={{paddingHorizontal: 0}}>
-            <RowComponent>
-              <TouchableOpacity
-                style={[
-                  {
-                    height: 40,
-                    padding: 8,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: appColors.gray7,
-                    borderRadius: 8,
-                  },
-                ]}>
-                <TextComponent text="+84" />
-              </TouchableOpacity>
-              <View style={{marginHorizontal: 8, flex: 1}}>
-                <InputCompoment
-                  placeholder="Your Phone number"
-                  prefix={<Call size={20} color={appColors.gray} />}
-                  value={registerValues.phoneNumber}
-                  onChange={val => handleValue(val, 'phoneNumber')}
-                  flex={1}
-                />
-              </View>
-              <ButtonComponent text="Get" onPress={() => {}} />
-            </RowComponent>
-          </SectionComponent>
+          <InputCompoment
+            label="Nickname"
+            placeholder="Please enter a nickname"
+            value={registerValues.nickname}
+            onChange={val => handleValue(val, 'nickname')}
+            max={100}
+            clear
+            prefix={<User size={20} color={appColors.gray} />}
+            helpText={helpers.helpNickname}
+          />
+
+          <InputCompoment
+            label="Mobile Number"
+            value={registerValues.phoneNumber}
+            onChange={val => handleValue(val, 'phoneNumber')}
+            clear
+            type="phone-pad"
+            prefix={<Call size={20} color={appColors.gray} />}
+            helpText={helpers.helpPhone}
+          />
+          <InputCompoment
+            label="Login Password"
+            value={registerValues.loginPassword}
+            onChange={val => handleValue(val, 'loginPassword')}
+            show={isShowPass}
+            setIsShowPass={() => setIsShowPass(!isShowPass)}
+            isSecure
+            helpText={helpers.helpLoginPass}
+            prefix={<Lock size={20} color={appColors.gray} />}
+          />
+
+          <InputCompoment
+            label="Invitation code"
+            value={invitationCode}
+            onChange={val => setInvitationCode(val)}
+            clear
+            helpText={helpers.helpInvatitation}
+            type="number-pad"
+            prefix={<GlobalSearch size={20} color={appColors.gray} />}
+          />
+          <InputCompoment
+            label="Fund Password"
+            value={registerValues.fundPassword}
+            onChange={val => handleValue(val, 'fundPassword')}
+            show={isShowFundPass}
+            setIsShowPass={() => setIsShowFundPass(!isShowFundPass)}
+            isSecure
+            prefix={<Lock size={20} color={appColors.gray} />}
+            helpText={helpers.helpFundPass}
+          />
+
           {errorMessage && (
             <TextComponent
               text={errorMessage}
@@ -196,26 +193,20 @@ const SignUp = ({navigation}: any) => {
           )}
 
           <SectionComponent styles={{paddingHorizontal: 0}}>
-            <ButtonComponent text="Register" onPress={() => {}} />
+            <ButtonComponent text="Register" onPress={handleRegister} />
           </SectionComponent>
-          <RowComponent onPress={() => navigation.goBack()}>
-            <TextComponent
-              flex={0}
-              text="Already have an account? "
-              size={12}
-            />
-            <TextComponent
-              flex={0}
-              text="Login now"
-              color={appColors.primary}
-              size={12}
-            />
-          </RowComponent>
-        </SectionComponent>
-
-        {errorMessage && (
-          <TextComponent text={errorMessage} color={appColors.error} flex={0} />
-        )}
+        </ScrollView>
+        <RowComponent
+          onPress={() => navigation.goBack()}
+          styles={{paddingVertical: 12}}>
+          <TextComponent flex={0} text="Already have an account? " size={12} />
+          <TextComponent
+            flex={0}
+            text="Login now"
+            color={appColors.primary}
+            size={12}
+          />
+        </RowComponent>
       </ImageBackground>
       <ModalLoading visible={isLoading} />
       <ModalAlert

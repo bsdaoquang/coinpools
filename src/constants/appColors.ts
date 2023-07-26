@@ -5,7 +5,7 @@ export const appColors: any = {
   description: '#8F96A5',
   badge: '#EA4A4A',
   error: '#F26969',
-  backgroundColor: '#F3F2F7',
+  backgroundColor: '#fff',
   white: '#ffffff',
   processActive: '#299A3B',
   folderDefaultColor: '#e9b500',

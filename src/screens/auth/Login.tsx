@@ -18,11 +18,13 @@ import {appSize} from '../../constants/appSize';
 import {fontFamilys} from '../../constants/fontFamlily';
 import {global} from '../../styles/global';
 import {Validate} from '../../utils/validate';
+import getAuthenApi from '../../apis/auth/login';
+import axios from 'axios';
 
 const Login = ({navigation}: any) => {
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [helpEmail, setHelpEmail] = useState('');
+  const [helpphoneNumber, setHelpphoneNumber] = useState('');
   const [helpPass, setHelpPass] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setisLoading] = useState(false);
@@ -31,17 +33,11 @@ const Login = ({navigation}: any) => {
 
   const handleCheckInput = (target: string) => {
     setErrorMessage('');
-    if (target === 'email') {
-      if (!email || email === '') {
-        setHelpEmail('Please enter your email!');
+    if (target === 'phoneNumber') {
+      if (!phoneNumber || phoneNumber === '') {
+        setHelpphoneNumber('Please enter your phone number!');
       } else {
-        setHelpEmail('');
-        const validate = Validate.email(email);
-        if (!validate) {
-          setHelpEmail('Email invalidate!');
-        } else {
-          setHelpEmail('');
-        }
+        setHelpphoneNumber('');
       }
     } else {
       if (!password) {
@@ -52,12 +48,9 @@ const Login = ({navigation}: any) => {
     }
   };
 
-  const handleLogin = () => {
-    // if (email && password && !helpEmail && !helpPass) {
-    //   auth().signInWithEmailAndPassword(email, password);
-    // } else {
-    //   setErrorMessage('Please check your login information');
-    // }
+  const handleLogin = async () => {
+    if (phoneNumber && password && !helpphoneNumber && !helpPass) {
+    }
   };
 
   return (
@@ -117,12 +110,12 @@ const Login = ({navigation}: any) => {
             <InputCompoment
               label="Mobile Number"
               placeholder="Your phone number"
-              value={email}
-              helpText={helpEmail}
-              onChange={val => setEmail(val)}
+              value={phoneNumber}
+              helpText={helpphoneNumber}
+              onChange={val => setphoneNumber(val)}
               prefix={<Call size={20} color={appColors.gray} />}
               clear
-              onEnd={() => handleCheckInput('email')}
+              onEnd={() => handleCheckInput('phoneNumber')}
               autoComplete="off"
               isCapitalize="none"
               type="phone-pad"
