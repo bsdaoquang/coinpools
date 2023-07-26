@@ -67,26 +67,9 @@ const Login = ({navigation}: any) => {
           justifyContent: 'center',
           alignItems: 'center',
           height: appSize.height,
-        }}>
-        <SectionComponent>
-          <TitleComponent text="Login" size={28} color={appColors.white} />
-        </SectionComponent>
-      </ImageBackground>
-      {/* <SectionComponent
-        styles={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingTop: '25%',
-        }}>
-        <TitleComponent
-          text="DUDU"
-          flex={0}
-          size={42}
-          font={fontFamilys.bold}
-          color="#585858"
-        />
-      </SectionComponent>
-      <SectionComponent>
+        }}></ImageBackground>
+
+      {/*    <SectionComponent>
         <InputCompoment
           placeholder="Email"
           value={email}

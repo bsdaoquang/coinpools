@@ -14,7 +14,7 @@ export const appColors: any = {
   blue1: '#E2EFFF',
   blue2: '#A2CFFF',
   blue4: '#004991',
-  primary: '#1abc9c',
+  primary: '#f8864d',
 
   gray: '#8F96A5',
   gray7: '#f1f1f1',
