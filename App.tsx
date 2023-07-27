@@ -1,17 +1,17 @@
-import auth from '@react-native-firebase/auth';
-import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {StatusBar} from 'react-native';
-import AuthNavigator from './src/navigators/AuthNavigator';
 import Router from './src/router/router';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
+import Toast from 'react-native-toast-message';
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
   return (
     <>
       <StatusBar translucent barStyle={'dark-content'} />
-      <NavigationContainer>
-        {isLogin ? <Router /> : <AuthNavigator />}
-      </NavigationContainer>
+      <Provider store={store}>
+        <Router />
+        <Toast />
+      </Provider>
     </>
   );
 };

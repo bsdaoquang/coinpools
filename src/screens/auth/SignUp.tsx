@@ -21,6 +21,7 @@ import CriptoJs from 'react-native-crypto-js';
 import {appInfos} from '../../constants/appInfos';
 import firestore from '@react-native-firebase/firestore';
 import {showToast} from '../../utils/showToast';
+import {JSHmac} from 'react-native-hash';
 
 interface HelpText {
   helpFundPass: string;
@@ -113,10 +114,11 @@ const SignUp = ({navigation}: any) => {
           } else {
             const data = {
               ...registerValues,
-              loginPassword: CriptoJs.AES.encrypt(
+              loginPassword: await JSHmac(
                 registerValues.loginPassword,
                 appInfos.code,
-              ).toString(),
+                appInfos.hashMac256,
+              ),
             };
             setisLoading(true);
 

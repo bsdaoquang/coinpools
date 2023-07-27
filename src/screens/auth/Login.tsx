@@ -1,5 +1,5 @@
 import CheckBox from '@react-native-community/checkbox';
-import {Call, Lock1, Messages1, Sms} from 'iconsax-react-native';
+import {Call, Lock1, Messages1} from 'iconsax-react-native';
 import React, {useState} from 'react';
 import {Image, ImageBackground, TouchableOpacity} from 'react-native';
 import {
@@ -17,9 +17,14 @@ import {appColors} from '../../constants/appColors';
 import {appSize} from '../../constants/appSize';
 import {fontFamilys} from '../../constants/fontFamlily';
 import {global} from '../../styles/global';
-import {Validate} from '../../utils/validate';
-import getAuthenApi from '../../apis/auth/login';
-import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
+import CriptoJs from 'react-native-crypto-js';
+import {appInfos} from '../../constants/appInfos';
+import {JSHmac} from 'react-native-hash';
+import {useDispatch} from 'react-redux';
+import {addAuth} from '../../redux/reducers/authReducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showToast} from '../../utils/showToast';
 
 const Login = ({navigation}: any) => {
   const [phoneNumber, setphoneNumber] = useState('');
@@ -48,8 +53,62 @@ const Login = ({navigation}: any) => {
     }
   };
 
+  const dispatch = useDispatch();
+
   const handleLogin = async () => {
     if (phoneNumber && password && !helpphoneNumber && !helpPass) {
+      // search on firebase
+      const filter = firestore()
+        .collection('users')
+        .where('phoneNumber', '==', phoneNumber);
+      setisLoading(true);
+      await filter
+        .get()
+        .then(async snap => {
+          if (snap.empty) {
+            setErrorMessage('Login failed, please try again!');
+          } else {
+            const items: any = [];
+            snap.forEach(item => {
+              items.push({
+                uid: item.id,
+                ...item.data(),
+              });
+            });
+
+            const item = items.find(
+              (element: any) => element.phoneNumber === phoneNumber,
+            );
+
+            if (item) {
+              const pass = await JSHmac(
+                password,
+                appInfos.code,
+                appInfos.hashMac256,
+              );
+
+              if (pass === item.loginPassword) {
+                dispatch(addAuth(item));
+
+                if (isRememberPass) {
+                  await AsyncStorage.setItem('user', JSON.stringify(item));
+                }
+
+                showToast('Login successfuly, welcome back!');
+              } else {
+                setErrorMessage(
+                  'Login failed, please check your phone number / password and try again!',
+                );
+              }
+            } else {
+              setErrorMessage('Account not found!');
+            }
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setisLoading(false);
+        });
     }
   };
 
