@@ -13,7 +13,7 @@ const UserAvatar = (props: Props) => {
   return (
     <Image
       source={{
-        uri: 'https://gamek.mediacdn.vn/133514250583805952/2022/5/18/photo-1-16528608926331302726659.jpg',
+        uri: 'https://tenant-assets.meiqiausercontent.com/avatars/361672/YZ4b/anlb7T2jXv7GJuH1nBg4.jpg',
       }}
       style={[
         global.avatar,

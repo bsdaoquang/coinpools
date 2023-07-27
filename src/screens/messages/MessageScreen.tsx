@@ -15,11 +15,13 @@ import {appColors} from '../../constants/appColors';
 import {fontFamilys} from '../../constants/fontFamlily';
 import {Message} from '../../models/Message';
 import {global} from '../../styles/global';
+import {useSelector} from 'react-redux';
+import {authSelector} from '../../redux/reducers/authReducer';
 
 const MessageScreen = ({navigation}: any) => {
   // const [conversations, setConversations] = useState<any[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-  const user = auth().currentUser;
+  const user = useSelector(authSelector);
 
   useEffect(() => {
     getAllConversationByUid();
@@ -119,14 +121,7 @@ const MessageScreen = ({navigation}: any) => {
   );
 
   return (
-    <Container
-      title="Message"
-      right={
-        <ButtonIcon
-          icon={<AddSquare size={20} color={appColors.gray} />}
-          onPress={handleAddNewConversation}
-        />
-      }>
+    <Container barStyle="dark-content">
       {messages.length > 0 ? (
         <FlatList
           showsVerticalScrollIndicator={false}

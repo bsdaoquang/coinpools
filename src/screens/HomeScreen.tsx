@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}: any) => {
                 <TextComponent text={userDetail.type} color={appColors.gray} />
               </View>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                 <Image
                   source={
                     userDetail.photoURL

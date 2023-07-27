@@ -7,8 +7,8 @@ const MessageNavigator = () => {
   const MessStack = createNativeStackNavigator();
   return (
     <MessStack.Navigator screenOptions={{headerShown: false}}>
-      <MessStack.Screen name="MessageSceen" component={MessageScreen} />
-      <MessStack.Screen name="Conversations" component={Conversations} />
+      <MessStack.Screen name="MessageSceen" component={Conversations} />
+      {/* <MessStack.Screen name="Conversations" component={Conversations} /> */}
     </MessStack.Navigator>
   );
 };

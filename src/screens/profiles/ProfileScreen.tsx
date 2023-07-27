@@ -1,240 +1,275 @@
-import auth from '@react-native-firebase/auth';
-import {
-  ArrowRight2,
-  Call,
-  Camera,
-  InfoCircle,
-  Lock,
-  Lock1,
-  LogoutCurve,
-  Setting2,
-} from 'iconsax-react-native';
+import {Notification, Setting2} from 'iconsax-react-native';
 import React from 'react';
 import {
-  ActivityIndicator,
+  Alert,
   Image,
   ImageBackground,
-  ScrollView,
   StatusBar,
-  Text,
+  StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {
+  ButtonComponent,
+  ButtonIcon,
   Container,
   RowComponent,
+  SectionComponent,
+  SpaceComponent,
+  TagComponent,
   TextComponent,
   TitleComponent,
 } from '../../components';
 import {appColors} from '../../constants/appColors';
-import {fontFamilys} from '../../constants/fontFamlily';
+import {addAuth, authSelector} from '../../redux/reducers/authReducer';
 import {global} from '../../styles/global';
+import {MenuItem} from '../../models/Menu';
+import {appSize} from '../../constants/appSize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileScreen = ({navigation}: any) => {
-  const userDetail = auth().currentUser;
+  const userDetail = useSelector(authSelector);
 
-  const menuUser: {
-    key: string;
-    label: string;
-    icon: any;
-    url?: string;
-    color: string;
-    hide?: boolean;
-    onPress: () => void;
-  }[] = [
+  const menuUsers: MenuItem[] = [
     {
-      key: 'ProfileDetail',
-      label: 'Profile',
-      icon: <InfoCircle size="20" color={appColors.primary} variant="Bold" />,
-      color: '#F1F7FF',
-      url: 'ProfileDetail',
-      onPress: () => {},
-    },
-
-    {
-      key: 'changePass',
-      label: 'Change password',
-      icon: <Lock size="20" color="#A97D5D" variant="Bold" />,
-      url: 'ChangePassword',
-      color: '#FFF2E8',
-      onPress: () => {},
+      key: 'Infomation',
+      title: 'Personal information',
+      icon: (
+        <Image
+          source={require('../../assets/images/user-info.png')}
+          style={styles.buttonIcon}
+        />
+      ),
     },
     {
-      key: 'setting',
-      label: 'Setting',
-      icon: <Setting2 size="20" color="#5DA99B" variant="Bold" />,
-      url: 'ProfileSetting',
-      color: '#EBF5F3',
-      onPress: () => {},
+      key: 'OrderRecord',
+      title: 'Grab order record',
+      icon: (
+        <Image
+          source={require('../../assets/images/user-grap.png')}
+          style={styles.buttonIcon}
+        />
+      ),
     },
     {
-      key: 'support',
-      label: 'Support',
-      icon: <Call size="20" color="#6A6AE4" variant="Bold" />,
-      url: 'SuppotScreen',
-      color: '#EBEBF5',
-      onPress: () => {},
+      key: 'Detail',
+      title: 'Account details',
+      icon: (
+        <Image
+          source={require('../../assets/images/account-detail.png')}
+          style={styles.buttonIcon}
+        />
+      ),
     },
     {
-      key: 'logout',
-      label: 'Sign Out',
-      icon: <LogoutCurve size="20" color="#DC5757" variant="Bold" />,
-      color: '#FFEEEE',
-      onPress: async () => {
-        await auth().signOut();
-      },
+      key: 'Recharge',
+      title: 'Recharge record',
+      icon: (
+        <Image
+          source={require('../../assets/images/account-balance.png')}
+          style={styles.buttonIcon}
+        />
+      ),
+    },
+    {
+      key: 'Withdrawals',
+      title: 'Withdrawals record',
+      icon: (
+        <Image
+          source={require('../../assets/images/withdaw.png')}
+          style={styles.buttonIcon}
+        />
+      ),
+    },
+    {
+      key: 'InviteFriends',
+      title: 'Invite friends',
+      icon: (
+        <Image
+          source={require('../../assets/images/invite.png')}
+          style={styles.buttonIcon}
+        />
+      ),
+    },
+    {
+      key: 'SystemInfo',
+      title: 'System information',
+      icon: (
+        <Image
+          source={require('../../assets/images/user-chat.png')}
+          style={styles.buttonIcon}
+        />
+      ),
+    },
+    {
+      key: 'Team',
+      title: 'My team',
+      icon: (
+        <Image
+          source={require('../../assets/images/team.png')}
+          style={styles.buttonIcon}
+        />
+      ),
     },
   ];
 
-  return (
-    <>
-      <StatusBar barStyle={'light-content'} />
-      {userDetail ? (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: appColors.white,
-          }}>
-          <ImageBackground
-            source={require('../../assets/images/background-user.png')}
-            resizeMode="cover"
-            style={{
-              ...global.inner,
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: 16,
-              paddingTop: 42,
-              height: 250,
-              paddingBottom: 60,
-            }}>
-            <View style={{position: 'relative'}}>
-              <Image
-                source={
-                  userDetail.photoURL
-                    ? {uri: userDetail.photoURL}
-                    : require('../../assets/images/avatar-default.png')
-                }
-                style={{
-                  ...global.avatar,
-                  width: 80,
-                  height: 80,
-                  borderRadius: 50,
-                }}
-                resizeMode="cover"
-              />
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: appColors.gray7,
-                  padding: 4,
-                  borderWidth: 2,
-                  borderColor: appColors.white,
-                  borderRadius: 100,
-                }}
-                onPress={() => {}}>
-                <Camera size={16} color={appColors.gray} />
-              </TouchableOpacity>
-            </View>
+  const handleNavigation = (item: MenuItem) => {
+    console.log(item);
+  };
 
-            <TitleComponent
-              font={fontFamilys.bold}
-              text={userDetail.displayName ?? 'User name'}
-              size={18}
-              color={appColors.white}
-              flex={0}
-              styles={{
-                marginVertical: 12,
-                textTransform: 'capitalize',
-              }}
-            />
-            <RowComponent
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    Alert.alert('', 'Are you sure to exit?', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+      },
+      {
+        text: 'Confirm',
+        style: 'destructive',
+        onPress: async () => {
+          await AsyncStorage.clear().then(() => {
+            dispatch(addAuth({}));
+          });
+        },
+      },
+    ]);
+  };
+
+  return (
+    <Container top={0} isScroll>
+      <ImageBackground
+        source={require('../../assets/images/background-user.png')}>
+        <SectionComponent styles={{paddingTop: 32}}>
+          <RowComponent justify="space-between">
+            <ButtonIcon
+              icon={<Notification size={20} color={appColors.text} />}
               onPress={() => {}}
-              styles={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                borderRadius: 100,
-                paddingHorizontal: 8,
-                paddingVertical: 2,
+            />
+            <ButtonIcon
+              icon={<Setting2 size={20} color={appColors.text} />}
+              onPress={() => {}}
+            />
+          </RowComponent>
+          <RowComponent justify="flex-start" styles={{marginVertical: 12}}>
+            <Image
+              source={
+                userDetail.photoURL
+                  ? {uri: userDetail.photoURL}
+                  : require('../../assets/images/avatar-default.png')
+              }
+              style={[global.avatar]}
+            />
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 12,
               }}>
-              <TextComponent
-                text={userDetail.email ?? ''}
-                flex={0}
-                color={'rgba(255, 255, 255, 0.8)'}
-                size={12}
-                height={16}
-              />
+              <RowComponent
+                justify="flex-start"
+                styles={{alignItems: 'center'}}>
+                <TitleComponent text={userDetail.nickname} flex={0} />
+                <SpaceComponent width={6} />
+                <TagComponent text="LV1" color={appColors.gray} />
+              </RowComponent>
+              <TextComponent text={`Invitation code: ${`8c96`}`} size={12} />
+            </View>
+          </RowComponent>
+          <ImageBackground
+            source={require('../../assets/images/card.png')}
+            imageStyle={{
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+            }}
+            style={{padding: 8, paddingBottom: 24}}>
+            <TextComponent
+              text="Account balance"
+              size={12}
+              flex={0}
+              color={appColors.gray7}
+            />
+            <SpaceComponent height={8} />
+            <RowComponent>
+              <TitleComponent text="-5539.93" size={20} color="#f2d8be" />
+              <RowComponent>
+                <TouchableOpacity style={styles.button}>
+                  <TextComponent
+                    text="Recharge"
+                    flex={0}
+                    size={12}
+                    color={appColors.gray7}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button}>
+                  <TextComponent
+                    text="Withdrawal"
+                    flex={0}
+                    size={12}
+                    color={appColors.gray7}
+                  />
+                </TouchableOpacity>
+              </RowComponent>
             </RowComponent>
           </ImageBackground>
+        </SectionComponent>
+      </ImageBackground>
+      <Image
+        source={require('../../assets/images/card-bottom.png')}
+        style={{
+          width: 'auto',
+          resizeMode: 'contain',
+          marginTop: -26,
+          height: 28,
+          zIndex: 5,
+        }}
+      />
+      <StatusBar barStyle={'dark-content'} />
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{
-              ...global.inner,
-              flex: 1,
-              marginTop: -38,
-              backgroundColor: appColors.white,
-              borderTopLeftRadius: 40,
-              borderTopRightRadius: 40,
-              // marginBottom: 60,
-              overflow: 'scroll',
-            }}>
-            <>
-              {menuUser.map(
-                (item, index) =>
-                  !item.hide && (
-                    <TouchableOpacity
-                      style={{
-                        ...global.rowCenter,
-                        paddingVertical: 16,
-                        borderBottomWidth:
-                          index === menuUser.length - 1 ? 0 : 1,
-                        borderBottomColor: '#F3F5F6',
-                      }}
-                      key={item.key}
-                      onPress={item.onPress}>
-                      <View
-                        style={{
-                          width: 40,
-                          height: 40,
-                          backgroundColor: item.color,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 6,
-                          marginRight: 16,
-                        }}>
-                        {item.icon}
-                      </View>
+      <RowComponent styles={{flex: 1, flexWrap: 'wrap'}}>
+        {menuUsers.map(item => (
+          <TouchableOpacity
+            style={styles.buttonMenu}
+            key={item.key}
+            onPress={() => handleNavigation(item)}>
+            {item.icon}
+            <TextComponent text={item.title} flex={0} size={12} />
+          </TouchableOpacity>
+        ))}
+      </RowComponent>
 
-                      <TextComponent
-                        text={item.label}
-                        color={
-                          item.key === 'logout'
-                            ? appColors.error
-                            : appColors.text
-                        }
-                      />
-                      {item.url && (
-                        <ArrowRight2 size={22} color={appColors.description} />
-                      )}
-                    </TouchableOpacity>
-                  ),
-              )}
-            </>
-          </ScrollView>
-        </View>
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator />
-          <Text style={{...global.text, flex: 0}}>Loading...</Text>
-        </View>
-      )}
-    </>
+      <SectionComponent styles={{marginTop: 12}}>
+        <ButtonComponent
+          text="Signout"
+          color="#2f3848"
+          onPress={handleLogout}
+        />
+      </SectionComponent>
+    </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    paddingHorizontal: 12,
+    padding: 6,
+    backgroundColor: '#5d646e',
+    marginHorizontal: 4,
+    borderRadius: 24,
+  },
+  buttonMenu: {
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: appSize.width / 2,
+    borderWidth: 0.2,
+    borderColor: appColors.gray2,
+  },
+  buttonIcon: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+  },
+});
 export default ProfileScreen;

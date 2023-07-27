@@ -12,12 +12,7 @@ import TextComponent from './TextComponent';
 import {useNavigation} from '@react-navigation/native';
 import RowComponent from './RowComponent';
 import {appSize} from '../constants/appSize';
-
-interface MenuItem {
-  key: string;
-  title: string;
-  icon: ReactNode;
-}
+import {MenuItem} from '../models/Menu';
 
 const MenuComponent = () => {
   const navigation: any = useNavigation();

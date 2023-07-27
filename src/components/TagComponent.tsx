@@ -17,9 +17,8 @@ const TagComponent = ({text, color, textColor, styles}: Props) => {
     <View
       style={[
         {
-          borderRadius: 8,
+          borderRadius: 4,
           backgroundColor: color,
-          marginRight: 4,
         },
         styles,
       ]}>
@@ -30,8 +29,7 @@ const TagComponent = ({text, color, textColor, styles}: Props) => {
           {
             color: textColor ? textColor : appColors.white,
             fontFamily: fontFamilys.regular,
-            fontSize: appSize.textSize,
-            lineHeight: 16.37,
+            fontSize: 10,
           },
         ]}>
         {text}

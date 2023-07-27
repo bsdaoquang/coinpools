@@ -1,18 +1,26 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {DocumentText1, Element, Element4, User} from 'iconsax-react-native';
+import {
+  Document,
+  DocumentText,
+  Element4,
+  MessageText1,
+  Messages,
+  Messages1,
+  User,
+} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
 import {Image, ImageBackground} from 'react-native';
+import {useSelector} from 'react-redux';
 import {appColors} from '../constants/appColors';
+import AuthNavigator from '../navigators/AuthNavigator';
+import GrabNavigator from '../navigators/GrabNavigator';
 import HomeNavigator from '../navigators/HomeNavigator';
 import MessageNavigator from '../navigators/MessageNavigator';
-import ProfileNavigator from '../navigators/ProfileNavigator';
-import AuthNavigator from '../navigators/AuthNavigator';
-import {authSelector} from '../redux/reducers/authReducer';
-import {useSelector} from 'react-redux';
-import Splash from '../screens/Splash';
 import OrdersNavigator from '../navigators/OrdersNavigator';
-import GrabNavigator from '../navigators/GrabNavigator';
+import ProfileNavigator from '../navigators/ProfileNavigator';
+import {authSelector} from '../redux/reducers/authReducer';
+import Splash from '../screens/Splash';
 
 const Router = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
@@ -60,23 +68,9 @@ const Router = () => {
               color = focused ? appColors.primary : appColors.gray;
 
               if (route.name === 'Home') {
-                icon = (
-                  <Element4
-                    size={size}
-                    color={color}
-                    variant={focused ? 'Bold' : 'Outline'}
-                  />
-                );
+                icon = <Element4 size={size} color={color} />;
               } else if (route.name === 'Orders') {
-                icon = (
-                  <Image
-                    source={require('../assets/images/order.png')}
-                    style={{
-                      width: 22,
-                      height: 22,
-                    }}
-                  />
-                );
+                icon = <DocumentText size={size} color={color} />;
               } else if (route.name === 'Grap') {
                 icon = (
                   <ImageBackground
@@ -94,14 +88,10 @@ const Router = () => {
                       borderWidth: 0,
                     }}></ImageBackground>
                 );
+              } else if (route.name === 'Message') {
+                icon = <Messages1 size={size} color={color} />;
               } else {
-                icon = (
-                  <User
-                    size={size}
-                    color={color}
-                    variant={focused ? 'Bold' : 'Outline'}
-                  />
-                );
+                icon = <User size={size} color={color} />;
               }
 
               return icon;
@@ -111,8 +101,8 @@ const Router = () => {
           <Tabs.Screen name="Home" component={HomeNavigator} />
           <Tabs.Screen name="Orders" component={OrdersNavigator} />
           <Tabs.Screen name="Grap" component={GrabNavigator} />
-          <Tabs.Screen name="Profile4" component={ProfileNavigator} />
-          <Tabs.Screen name="Profile2" component={ProfileNavigator} />
+          <Tabs.Screen name="Message" component={MessageNavigator} />
+          <Tabs.Screen name="Profile" component={ProfileNavigator} />
         </Tabs.Navigator>
       ) : (
         <AuthNavigator />
