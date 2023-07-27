@@ -43,7 +43,7 @@ const ProfileScreen = ({navigation}: any) => {
       ),
     },
     {
-      key: 'OrderRecord',
+      key: 'Orders',
       title: 'Grab order record',
       icon: (
         <Image
@@ -51,6 +51,10 @@ const ProfileScreen = ({navigation}: any) => {
           style={styles.buttonIcon}
         />
       ),
+      onPress: () =>
+        navigation.navigate('Orders', {
+          screen: 'OrderScreens',
+        }),
     },
     {
       key: 'Detail',
@@ -115,7 +119,7 @@ const ProfileScreen = ({navigation}: any) => {
   ];
 
   const handleNavigation = (item: MenuItem) => {
-    console.log(item);
+    navigation.navigate(item.key);
   };
 
   const dispatch = useDispatch();
@@ -150,7 +154,7 @@ const ProfileScreen = ({navigation}: any) => {
             />
             <ButtonIcon
               icon={<Setting2 size={20} color={appColors.text} />}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('Infomation')}
             />
           </RowComponent>
           <RowComponent justify="flex-start" styles={{marginVertical: 12}}>
@@ -232,7 +236,9 @@ const ProfileScreen = ({navigation}: any) => {
           <TouchableOpacity
             style={styles.buttonMenu}
             key={item.key}
-            onPress={() => handleNavigation(item)}>
+            onPress={
+              item.onPress ? item.onPress : () => handleNavigation(item)
+            }>
             {item.icon}
             <TextComponent text={item.title} flex={0} size={12} />
           </TouchableOpacity>

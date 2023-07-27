@@ -7,6 +7,7 @@ import GrabOrders from './grabOrders/GrabOrders';
 import Conversations from './messages/Conversations';
 import MessageScreen from './messages/MessageScreen';
 import Products from './products/Products';
+import Infomation from './profiles/Infomation';
 import ProfileScreen from './profiles/ProfileScreen';
 
 export {
@@ -20,4 +21,5 @@ export {
   Products,
   Conversations,
   GrabOrders,
+  Infomation,
 };

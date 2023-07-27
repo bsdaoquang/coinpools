@@ -7,6 +7,7 @@ import Container from './Container';
 import DividerComponent from './DividerComponent';
 import DotComponent from './DotComponent';
 import {InputCompoment} from './InputCompoment';
+import ListItemComponent from './ListItemComponent';
 import MarqueeTextComponent from './MarqueeTextComponent';
 import MenuComponent from './MenuComponent';
 import OptionsLogin from './OptionsLogin';
@@ -44,4 +45,5 @@ export {
   MenuComponent,
   OrderDetail,
   MarqueeTextComponent,
+  ListItemComponent,
 };
