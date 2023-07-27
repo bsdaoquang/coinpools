@@ -11,6 +11,7 @@ import AuthNavigator from '../navigators/AuthNavigator';
 import {authSelector} from '../redux/reducers/authReducer';
 import {useSelector} from 'react-redux';
 import Splash from '../screens/Splash';
+import OrdersNavigator from '../navigators/OrdersNavigator';
 
 const Router = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
@@ -65,12 +66,14 @@ const Router = () => {
                     variant={focused ? 'Bold' : 'Outline'}
                   />
                 );
-              } else if (route.name === 'Message') {
+              } else if (route.name === 'Orders') {
                 icon = (
-                  <DocumentText1
-                    size={size}
-                    color={color}
-                    variant={focused ? 'Bold' : 'Outline'}
+                  <Image
+                    source={require('../assets/images/order.png')}
+                    style={{
+                      width: 22,
+                      height: 22,
+                    }}
                   />
                 );
               } else if (route.name === 'Grap') {
@@ -105,7 +108,7 @@ const Router = () => {
             tabBarShowLabel: false,
           })}>
           <Tabs.Screen name="Home" component={HomeNavigator} />
-          <Tabs.Screen name="Message" component={MessageNavigator} />
+          <Tabs.Screen name="Orders" component={OrdersNavigator} />
           <Tabs.Screen name="Grap" component={ProfileNavigator} />
           <Tabs.Screen name="Profile4" component={ProfileNavigator} />
           <Tabs.Screen name="Profile2" component={ProfileNavigator} />
