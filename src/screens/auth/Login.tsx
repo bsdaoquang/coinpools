@@ -211,7 +211,8 @@ const Login = ({navigation}: any) => {
 
                 <TextComponent text="Remember password?" size={12} flex={1} />
               </RowComponent>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ForgotPass')}>
                 <TextComponent
                   text="Forgot password?"
                   color={appColors.primary}
