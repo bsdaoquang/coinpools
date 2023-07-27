@@ -12,6 +12,7 @@ import {authSelector} from '../redux/reducers/authReducer';
 import {useSelector} from 'react-redux';
 import Splash from '../screens/Splash';
 import OrdersNavigator from '../navigators/OrdersNavigator';
+import GrabNavigator from '../navigators/GrabNavigator';
 
 const Router = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
@@ -109,7 +110,7 @@ const Router = () => {
           })}>
           <Tabs.Screen name="Home" component={HomeNavigator} />
           <Tabs.Screen name="Orders" component={OrdersNavigator} />
-          <Tabs.Screen name="Grap" component={ProfileNavigator} />
+          <Tabs.Screen name="Grap" component={GrabNavigator} />
           <Tabs.Screen name="Profile4" component={ProfileNavigator} />
           <Tabs.Screen name="Profile2" component={ProfileNavigator} />
         </Tabs.Navigator>

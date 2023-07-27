@@ -1,33 +1,29 @@
+import firestore from '@react-native-firebase/firestore';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
   ImageBackground,
-  Touchable,
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {useSelector} from 'react-redux';
 import {
-  CardContent,
   Container,
+  MarqueeTextComponent,
   MenuComponent,
   RowComponent,
   SectionComponent,
   SpaceComponent,
   TabbarComponent,
-  TagComponent,
   TextComponent,
   TitleComponent,
 } from '../components';
-import {global} from '../styles/global';
-import {useSelector} from 'react-redux';
-import {authSelector} from '../redux/reducers/authReducer';
 import {appColors} from '../constants/appColors';
-import firestore from '@react-native-firebase/firestore';
-import MarqueeText from 'react-native-marquee';
-import {Brodcast, Home} from 'iconsax-react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {appSize} from '../constants/appSize';
+import {authSelector} from '../redux/reducers/authReducer';
+import {global} from '../styles/global';
 
 const HomeScreen = ({navigation}: any) => {
   const [userDetail, setUserDetail] = useState<any>();
@@ -152,40 +148,17 @@ const HomeScreen = ({navigation}: any) => {
               </RowComponent>
             </ImageBackground>
           </SectionComponent>
-          <SectionComponent>
-            <RowComponent>
-              <Image
-                source={require('../assets/images/gg.png')}
-                style={{
-                  width: 30,
-                  height: 30,
-                  resizeMode: 'contain',
-                  marginRight: 12,
-                }}
-              />
-              <View
-                style={{
-                  backgroundColor: appColors.gray7,
-                  padding: 8,
-                  flex: 1,
-                }}>
-                <MarqueeText
-                  style={[global.text]}
-                  speed={1}
-                  delay={10000}
-                  loop
-                  marqueeOnStart>
-                  Lorem Ipsum is industry.Lorem Ipsum is industry.Lorem Ipsum is
-                  industry.Lorem Ipsum is industry.Lorem Ipsum is industry.
-                </MarqueeText>
-              </View>
-            </RowComponent>
-          </SectionComponent>
+          <MarqueeTextComponent />
 
           <MenuComponent />
           <SectionComponent>
             <TabbarComponent title="Mission Hall" />
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Grap', {
+                  screen: 'GrabOrders',
+                })
+              }>
               <LinearGradient
                 style={[global.card]}
                 start={{x: 0, y: 0}}

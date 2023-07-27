@@ -7,8 +7,10 @@ import Container from './Container';
 import DividerComponent from './DividerComponent';
 import DotComponent from './DotComponent';
 import {InputCompoment} from './InputCompoment';
+import MarqueeTextComponent from './MarqueeTextComponent';
 import MenuComponent from './MenuComponent';
 import OptionsLogin from './OptionsLogin';
+import OrderDetail from './OrderDetail';
 import RowComponent from './RowComponent';
 import {SectionComponent} from './SectionComponent';
 import SkeletonItem from './SkeletonItem';
@@ -40,4 +42,6 @@ export {
   DotComponent,
   AddMessageComponent,
   MenuComponent,
+  OrderDetail,
+  MarqueeTextComponent,
 };

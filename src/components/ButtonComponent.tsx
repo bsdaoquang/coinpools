@@ -74,7 +74,7 @@ export const ButtonComponent = (props: Props) => {
       <SpaceComponent width={4} />
       <TextComponent
         flex={0}
-        size={16}
+        size={14}
         text={text}
         styles={{
           color: outline

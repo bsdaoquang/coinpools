@@ -20,7 +20,7 @@ import {fontFamilys} from '../../constants/fontFamlily';
 const Products = () => {
   const Tab = createMaterialTopTabNavigator();
   return (
-    <Container isScroll top={0} barStyle="dark-content">
+    <Container top={0} barStyle="dark-content">
       <LinearGradient
         style={[global.container, {height: appSize.height}]}
         colors={['rgba(206,213,223,1)', 'rgba(206,213,223,0)']}>
