@@ -23,7 +23,7 @@ export const appColors: any = {
   gray4: '#004991',
   gray3: '#dbdbdb',
   gray2: '#dfdfe1',
-  gray1: '#9a9a9a',
+  gray1: '#676767',
   c5c5c5: '#c5c5c5',
   f5f5f5: '#f5f5f5',
   gray67: '#676767',

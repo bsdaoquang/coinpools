@@ -1,23 +1,20 @@
-import { Dimensions, Platform, StyleSheet } from 'react-native';
-import { appColors } from '../constants/appColors';
-import { fontFamilys } from '../constants/fontFamlily';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {appColors} from '../constants/appColors';
+import {fontFamilys} from '../constants/fontFamlily';
 
 export const global = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: appColors.backgroundColor,
-
   },
 
   sections: {
     paddingHorizontal: 16,
-    paddingVertical: 16
-
+    paddingVertical: 12,
   },
 
   inner: {
     paddingHorizontal: 16,
-    padding: 15,
   },
 
   row: {
@@ -153,8 +150,8 @@ export const global = StyleSheet.create({
 
   card: {
     backgroundColor: appColors.white,
-    borderRadius: 8,
-    marginBottom: 12,
+    borderRadius: 12,
+    padding: 12,
   },
 
   cardTitleContainer: {
@@ -262,7 +259,6 @@ export const global = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-
   },
 
   listItemIcon: {
@@ -417,10 +413,10 @@ export const global = StyleSheet.create({
   dividerStyle: {
     height: 1,
     backgroundColor: appColors.gray6,
-    flex: 1
+    flex: 1,
   },
 
   cardProduct: {
-    width: (Dimensions.get("window").width - 44) / 2,
-  }
+    width: (Dimensions.get('window').width - 44) / 2,
+  },
 });
