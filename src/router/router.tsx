@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {DocumentText1, Element, User} from 'iconsax-react-native';
+import {DocumentText1, Element, Element4, User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
 import {Image, ImageBackground} from 'react-native';
 import {appColors} from '../constants/appColors';
@@ -59,7 +59,7 @@ const Router = () => {
 
               if (route.name === 'Home') {
                 icon = (
-                  <Element
+                  <Element4
                     size={size}
                     color={color}
                     variant={focused ? 'Bold' : 'Outline'}

@@ -158,7 +158,6 @@ const Container = ({
         <View
           style={{
             ...global.container,
-
             backgroundColor: backgroundColor ?? appColors.backgroundColor,
           }}>
           {children}
@@ -170,6 +169,7 @@ const Container = ({
   return (
     <View
       style={{
+        ...global.container,
         paddingTop: top ?? 32,
         flex: 1,
         backgroundColor: backgroundColor ? backgroundColor : appColors.white,

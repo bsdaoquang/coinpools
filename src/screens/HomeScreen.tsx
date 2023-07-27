@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
   Touchable,
@@ -13,6 +14,7 @@ import {
   RowComponent,
   SectionComponent,
   SpaceComponent,
+  TabbarComponent,
   TagComponent,
   TextComponent,
   TitleComponent,
@@ -24,9 +26,12 @@ import {appColors} from '../constants/appColors';
 import firestore from '@react-native-firebase/firestore';
 import MarqueeText from 'react-native-marquee';
 import {Brodcast, Home} from 'iconsax-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {appSize} from '../constants/appSize';
 
 const HomeScreen = ({navigation}: any) => {
   const [userDetail, setUserDetail] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
   const auth = useSelector(authSelector);
 
   useEffect(() => {
@@ -34,6 +39,7 @@ const HomeScreen = ({navigation}: any) => {
   }, [auth.uid]);
 
   const getUserDetail = async () => {
+    setIsLoading(true);
     await firestore()
       .collection('users')
       .doc(auth.uid)
@@ -46,13 +52,26 @@ const HomeScreen = ({navigation}: any) => {
             uid: auth.uid,
             ...snap.data(),
           });
+          setIsLoading(false);
         }
+      })
+      .catch(e => {
+        console.log(e);
+        setIsLoading(false);
       });
   };
 
+  const commissionImages = [
+    'https://xxxx.coinpools.me/upload/114945a0b5552a45/e1bfb42b21bc494f.jpg',
+    'https://xxxx.coinpools.me/upload/76c16bfb2270999c/1041a5b15f369744.jpg',
+    'https://xxxx.coinpools.me/upload/0cfc01754ab11f5b/95e4ed0c1d3aaf81.jpg',
+  ];
+
   return (
     <Container barStyle="dark-content" isScroll>
-      {userDetail ? (
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : userDetail ? (
         <>
           <SectionComponent styles={{paddingTop: 0}}>
             <RowComponent>
@@ -164,6 +183,34 @@ const HomeScreen = ({navigation}: any) => {
           </SectionComponent>
 
           <MenuComponent />
+          <SectionComponent>
+            <TabbarComponent title="Mission Hall" />
+            <TouchableOpacity>
+              <LinearGradient
+                style={[global.card]}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#CDDC39', '#8BC34A', '#FFEB3B']}>
+                <TitleComponent text="Commission rate: 30%" />
+                <TextComponent text="Matching interval: 0.00" size={12} />
+                <SpaceComponent height={12} />
+                <RowComponent
+                  styles={{flex: 1, justifyContent: 'space-between'}}>
+                  {commissionImages.map((img, index) => (
+                    <Image
+                      key={`img${index}`}
+                      source={{uri: img}}
+                      style={{
+                        width: (appSize.width - 100) / 3,
+                        height: (appSize.width - 100) / 3,
+                        resizeMode: 'cover',
+                      }}
+                    />
+                  ))}
+                </RowComponent>
+              </LinearGradient>
+            </TouchableOpacity>
+          </SectionComponent>
         </>
       ) : (
         <TextComponent text="User not found!" />
