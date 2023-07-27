@@ -5,8 +5,7 @@ import {StatusBar} from 'react-native';
 import AuthNavigator from './src/navigators/AuthNavigator';
 import Router from './src/router/router';
 const App = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <>
       <StatusBar translucent barStyle={'dark-content'} />

@@ -17,6 +17,10 @@ import {appSize} from '../../constants/appSize';
 import {fontFamilys} from '../../constants/fontFamlily';
 import {ModalAlert} from '../../modals/ModalAlert';
 import {ModalLoading} from '../../modals/ModalLoading';
+import CriptoJs from 'react-native-crypto-js';
+import {appInfos} from '../../constants/appInfos';
+import firestore from '@react-native-firebase/firestore';
+import {showToast} from '../../utils/showToast';
 
 interface HelpText {
   helpFundPass: string;
@@ -95,12 +99,52 @@ const SignUp = ({navigation}: any) => {
     }
 
     if (valid) {
-      console.log('register');
+      const filter = firestore()
+        .collection('users')
+        .where('phoneNumer', '==', registerValues.phoneNumber);
+
+      filter.get().then(async snap => {
+        if (snap.empty) {
+          if (invitationCode !== '123456') {
+            setHelpers({
+              ...helpers,
+              helpInvatitation: 'Invitation is wrong!',
+            });
+          } else {
+            const data = {
+              ...registerValues,
+              loginPassword: CriptoJs.AES.encrypt(
+                registerValues.loginPassword,
+                appInfos.code,
+              ).toString(),
+            };
+            setisLoading(true);
+
+            await firestore()
+              .collection('users')
+              .add(data)
+              .then(() => {
+                showToast('Register successfully!');
+                navigation.goBack();
+                setisLoading(false);
+              })
+              .catch(e => {
+                console.log(e);
+                setisLoading(false);
+              });
+          }
+        } else {
+          setHelpers({
+            ...helpers,
+            helpPhone: 'Account is existring!',
+          });
+        }
+      });
     }
   };
 
   return (
-    <Container top={0}>
+    <Container top={0} isScroll>
       <ImageBackground
         source={require('../../assets/images/login-bg.png')}
         resizeMode="cover"
