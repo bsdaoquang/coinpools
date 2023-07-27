@@ -19,6 +19,7 @@ export const ModalAlert = (props: Props) => {
       <View
         style={{
           flex: 1,
+          padding: 20,
           backgroundColor: 'rgba(0,0,0, 0.5)',
           justifyContent: 'center',
           alignItems: 'center',
