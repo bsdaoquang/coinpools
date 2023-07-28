@@ -7,7 +7,7 @@ import {appColors} from '../constants/appColors';
 import SpaceComponent from './SpaceComponent';
 
 interface Props {
-  icon: ReactNode;
+  icon?: ReactNode;
   title: string;
   right?: ReactNode;
   onPress: () => void;

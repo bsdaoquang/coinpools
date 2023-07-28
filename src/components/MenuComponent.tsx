@@ -26,6 +26,7 @@ const MenuComponent = () => {
           style={styles.icon}
         />
       ),
+      onPress: () => navigation.navigate('Profile', {screen: 'Recharge'}),
     },
     {
       key: 'Withdrawal',
@@ -36,6 +37,7 @@ const MenuComponent = () => {
           style={styles.icon}
         />
       ),
+      onPress: () => navigation.navigate('Profile', {screen: 'Withdrawal'}),
     },
     {
       key: 'Invite',
@@ -94,7 +96,7 @@ const MenuComponent = () => {
         }}>
         {menus.map(item => (
           <TouchableOpacity
-            onPress={() => handleNavigation(item)}
+            onPress={item.onPress ? item.onPress : () => handleNavigation(item)}
             key={item.key}
             style={styles.buttonContainer}>
             {item.icon}

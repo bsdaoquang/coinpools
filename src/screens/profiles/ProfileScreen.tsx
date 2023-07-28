@@ -198,7 +198,9 @@ const ProfileScreen = ({navigation}: any) => {
             <RowComponent>
               <TitleComponent text="-5539.93" size={20} color="#f2d8be" />
               <RowComponent>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('Recharge')}>
                   <TextComponent
                     text="Recharge"
                     flex={0}
@@ -206,7 +208,9 @@ const ProfileScreen = ({navigation}: any) => {
                     color={appColors.gray7}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('Withdrawal')}>
                   <TextComponent
                     text="Withdrawal"
                     flex={0}

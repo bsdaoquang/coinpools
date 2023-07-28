@@ -9,6 +9,7 @@ export const appColors: any = {
   white: '#ffffff',
   processActive: '#299A3B',
   folderDefaultColor: '#e9b500',
+  secondary: '#2f3848',
 
   blue6: '#004997',
   blue1: '#E2EFFF',

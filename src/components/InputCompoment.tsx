@@ -5,6 +5,7 @@ import {
   Platform,
   StyleProp,
   TextInput,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -23,7 +24,9 @@ interface Props {
   onChange: (val: string) => void;
   flex?: number;
   clear?: boolean;
+  size?: number;
   show?: boolean;
+  font?: string;
   type?: KeyboardTypeOptions;
   required?: boolean;
   isSecure?: boolean;
@@ -37,6 +40,7 @@ interface Props {
   height?: number;
   autoFocus?: boolean;
   styles?: StyleProp<ViewStyle>;
+  inputStyles?: StyleProp<TextStyle>;
   disable?: boolean;
   autoComplete?:
     | 'birthdate-day'
@@ -94,7 +98,9 @@ export const InputCompoment = (props: Props) => {
     show,
     type,
     required,
+    size,
     isSecure,
+    font,
     onEnd,
     helpText,
     setIsShowPass,
@@ -107,6 +113,7 @@ export const InputCompoment = (props: Props) => {
     styles,
     autoComplete,
     disable,
+    inputStyles,
   } = props;
 
   const [newVal, setNewVal] = useState(value);
@@ -149,15 +156,18 @@ export const InputCompoment = (props: Props) => {
           secureTextEntry={isSecure ? !show : false}
           placeholderTextColor={appColors.gray}
           keyboardType={type ? type : 'default'}
-          style={{
-            flex: 1,
-            margin: 0,
-            padding: 0,
-            color: appColors.text,
-            fontFamily: fontFamilys.regular,
-            marginLeft: prefix ? 10 : 0,
-            fontSize: appSize.textSize,
-          }}
+          style={[
+            {
+              flex: 1,
+              margin: 0,
+              padding: 0,
+              color: appColors.text,
+              fontFamily: font ?? fontFamilys.regular,
+              marginLeft: prefix ? 10 : 0,
+              fontSize: size ?? appSize.textSize,
+            },
+            inputStyles,
+          ]}
           autoCapitalize={isCapitalize}
           onEndEditing={onEnd}
           autoFocus={autoFocus}

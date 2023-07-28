@@ -9,6 +9,8 @@ import MessageScreen from './messages/MessageScreen';
 import Products from './products/Products';
 import Infomation from './profiles/Infomation';
 import ProfileScreen from './profiles/ProfileScreen';
+import Recharge from './profiles/Recharge';
+import Withdrawal from './profiles/Withdrawal';
 
 export {
   Login,
@@ -22,4 +24,6 @@ export {
   Conversations,
   GrabOrders,
   Infomation,
+  Recharge,
+  Withdrawal
 };
