@@ -87,7 +87,7 @@ const ProfileScreen = ({navigation}: any) => {
       ),
     },
     {
-      key: 'InviteFriends',
+      key: 'Invitation',
       title: 'Invite friends',
       icon: (
         <Image

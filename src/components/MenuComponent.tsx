@@ -40,7 +40,7 @@ const MenuComponent = () => {
       onPress: () => navigation.navigate('Profile', {screen: 'Withdrawal'}),
     },
     {
-      key: 'Invite',
+      key: 'Invitation',
       title: 'Invite',
       icon: (
         <Image
@@ -48,6 +48,10 @@ const MenuComponent = () => {
           style={styles.icon}
         />
       ),
+      onPress: () =>
+        navigation.navigate('Profile', {
+          screen: 'Invitation',
+        }),
     },
     {
       key: 'Introduction',
@@ -70,7 +74,7 @@ const MenuComponent = () => {
       ),
     },
     {
-      key: 'faq2',
+      key: 'FAQ',
       title: 'FAQ',
       icon: (
         <Image
@@ -82,7 +86,7 @@ const MenuComponent = () => {
   ];
 
   const handleNavigation = (item: MenuItem) => {
-    console.log(item);
+    navigation.navigate(item.key);
   };
 
   return (
